@@ -1,0 +1,16 @@
+{% extends 'tasks/base.html' %}
+
+{% block title %}Welcome - TODO Homework App{% endblock %}
+
+{% block content %}
+<div style="text-align: center; padding: 3rem 0;">
+    <h1>Welcome to the TODO Homework App!</h1>
+    <p style="font-size: 1.1rem; margin: 1rem 0; color: #666;">
+        Stay organized and manage your tasks efficiently.
+    </p>
+    <div style="margin-top: 2rem;">
+        <a href="{% url 'tasks:task_list' %}" class="btn">View All Tasks</a>
+        <a href="{% url 'tasks:task_create' %}" class="btn" style="margin-left: 1rem;">Create New Task</a>
+    </div>
+</div>
+{% endblock %}

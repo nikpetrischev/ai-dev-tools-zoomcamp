@@ -1,0 +1,44 @@
+{% extends 'tasks/base.html' %}
+
+{% block title %}Task List - TODO App{% endblock %}
+
+{% block content %}
+<h1>My Tasks</h1>
+
+<a href="{% url 'tasks:task_create' %}" class="btn">+ Create New Task</a>
+
+<div style="margin-top: 2rem;">
+    {% if tasks %}
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background-color: #ecf0f1;">
+                    <th style="padding: 0.75rem; text-align: left; border: 1px solid #bdc3c7;">Title</th>
+                    <th style="padding: 0.75rem; text-align: left; border: 1px solid #bdc3c7;">Status</th>
+                    <th style="padding: 0.75rem; text-align: left; border: 1px solid #bdc3c7;">Priority</th>
+                    <th style="padding: 0.75rem; text-align: left; border: 1px solid #bdc3c7;">Due Date</th>
+                    <th style="padding: 0.75rem; text-align: left; border: 1px solid #bdc3c7;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                    <tr style="border: 1px solid #bdc3c7;">
+                        <td style="padding: 0.75rem;">{{ task.title }}</td>
+                        <td style="padding: 0.75rem;">{{ task.get_status_display }}</td>
+                        <td style="padding: 0.75rem;">{{ task.priority }}</td>
+                        <td style="padding: 0.75rem;">{{ task.due_date|date:"Y-m-d" }}</td>
+                        <td style="padding: 0.75rem;">
+                            {% if task.status != 'completed' %}
+                                <a href="{% url 'tasks:task_resolve' task.pk %}" class="btn btn-success">Mark Resolved</a>
+                            {% endif %}
+                            <a href="{% url 'tasks:task_edit' task.pk %}" class="btn">Edit</a>
+                            <a href="{% url 'tasks:task_delete' task.pk %}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No tasks yet. <a href="{% url 'tasks:task_create' %}">Create one now</a>!</p>
+    {% endif %}
+</div>
+{% endblock %}
